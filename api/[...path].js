@@ -35,8 +35,10 @@ async function route(req, res) {
 
   /* ----- Públicas ----- */
   if (a === 'health' && method === 'GET') {
-    await db.query('SELECT 1');
-    return send(res, 200, { ok: true });
+    const info = { ok: false, env: { DATABASE_URL: !!db.connectionStringRaw(), ADMIN_PASSWORD: auth.adminConfigured(), SESSION_SECRET: !!process.env.SESSION_SECRET } };
+    try { await db.query('SELECT 1'); info.ok = true; }
+    catch (e) { info.stage = 'database'; info.error = e instanceof HttpError ? e.message : `${e.code || e.name}: ${String(e.message).slice(0, 160)}`; }
+    return send(res, info.ok ? 200 : 503, info);
   }
   if (a === 'store' && method === 'GET') {
     return send(res, 200, await svc.publicStore(), { 'Cache-Control': 'public, max-age=0, s-maxage=5, stale-while-revalidate=10' });
@@ -111,8 +113,9 @@ module.exports = async function handler(req, res) {
   } catch (err) {
     if (err instanceof HttpError) return send(res, err.status, { error: err.message });
     console.error('API error:', err && err.stack || err);
+    const ref = String((err && (err.code || err.name)) || 'ERR').slice(0, 30);
     const dbDown = err && (err.code === 'ECONNREFUSED' || err.code === 'ENOTFOUND' || err.code === 'ETIMEDOUT' || /connect|timeout/i.test(String(err.message)));
-    return send(res, dbDown ? 503 : 500, { error: dbDown ? 'Serviço temporariamente indisponível. Tente novamente.' : 'Erro interno. Tente novamente.' });
+    return send(res, dbDown ? 503 : 500, { error: (dbDown ? 'Serviço temporariamente indisponível. Tente novamente.' : 'Erro interno. Tente novamente.') + ` (código: ${ref})` });
   } finally {
     if (Math.random() < 0.01) db.cleanup().catch(() => {});
   }
