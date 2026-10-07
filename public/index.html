@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Andreia semijoias · Semijoias com essência</title>
+<meta name="description" content="Semijoias para acompanhar sua história. Escolha sua peça e finalize o atendimento pelo WhatsApp.">
+<meta name="theme-color" content="#2a2420">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Andreia semijoias">
+<meta property="og:description" content="Pequenos detalhes. Um brilho só seu.">
+<meta property="og:image" content="/img/p1.jpg">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/site.css">
+<noscript><style>.card{opacity:1}</style></noscript>
+</head>
+<body>
+<a class="skip" href="#colecao">Pular para a coleção</a>
+<div class="topline">Pequenos detalhes. Um brilho só seu.</div>
+
+<header class="site-header" id="siteHeader">
+  <div class="wrap header-in">
+    <a class="brand" href="/" aria-label="Página inicial"><span data-store>Andreia semijoias</span><small>semijoias &amp; essência</small></a>
+    <nav class="nav" aria-label="Principal">
+      <a href="#colecao">Coleção</a>
+      <a class="hide-sm" href="#essencia">Nossa essência</a>
+      <a class="btn wa small" id="headerWa" href="#contato"><span>Fale conosco</span></a>
+    </nav>
+  </div>
+</header>
+
+<div id="affiliateBanner" class="affiliate-banner" role="status" hidden><span aria-hidden="true">✓</span><span id="affiliateBannerText"></span></div>
+
+<main>
+  <section class="wrap hero" aria-labelledby="heroTitle">
+    <div class="hero-copy">
+      <span class="eyebrow">O extraordinário mora nos detalhes</span>
+      <h1 id="heroTitle">Seu brilho.<br>Sua <em>essência.</em></h1>
+      <p>Semijoias para acompanhar sua história, do encontro casual aos momentos inesquecíveis.</p>
+      <div class="hero-cta">
+        <a class="btn" href="#colecao">Ver a coleção <span aria-hidden="true">↓</span></a>
+        <a class="btn outline" href="#essencia">Nossa essência</a>
+      </div>
+    </div>
+    <div class="hero-art">
+      <div class="hero-frame"><img id="heroImg" src="/img/p1.jpg" alt="Mulher usando colar delicado dourado" width="1000" height="1498" fetchpriority="high"></div>
+      <div class="hero-tag"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="#a67c3d" stroke-width="1.6"><path d="M12 3l2.6 5.6 6.1.7-4.5 4.2 1.2 6L12 16.5 6.6 19.5l1.2-6L3.3 9.3l6.1-.7z"/></svg><span><b>Seleção especial</b>peças escolhidas a dedo</span></div>
+    </div>
+  </section>
+
+  <div class="wrap benefits">
+    <div class="benefit"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l2.6 5.6 6.1.7-4.5 4.2 1.2 6L12 16.5 6.6 19.5l1.2-6L3.3 9.3l6.1-.7z"/></svg><span>Uma seleção especial</span></div>
+    <div class="benefit"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/></svg><span>Escolha com personalidade</span></div>
+    <div class="benefit"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16v11H9l-5 4z"/></svg><span>Atendimento pelo WhatsApp</span></div>
+  </div>
+
+  <section class="wrap collection" id="colecao" aria-labelledby="colTitle">
+    <div class="section-head">
+      <div><span class="eyebrow">Encontre seus favoritos</span><h2 id="colTitle">Detalhes que encantam</h2></div>
+      <div class="tools"><span id="count" aria-live="polite"></span>
+        <label class="sr-only" for="sort">Ordenar</label>
+        <select id="sort"><option value="default">Ordem da vitrine</option><option value="asc">Menor preço</option><option value="desc">Maior preço</option></select>
+      </div>
+    </div>
+    <div class="grid" id="products" aria-busy="true"></div>
+    <p class="help note-fine">Fotos ilustrativas. Confirme disponibilidade e detalhes de cada peça no atendimento.</p>
+  </section>
+
+  <section class="about" id="essencia">
+    <span class="eyebrow">Além do acessório</span>
+    <h2>A beleza de ser você.</h2>
+    <p>Acreditamos no poder dos detalhes. Encontre peças que expressem sua personalidade e converse com a gente para escolher a sua favorita.</p>
+    <div class="about-points">
+      <div><b>Escolha</b>Selecione a peça que combina com você.</div>
+      <div><b>Converse</b>Tire dúvidas direto no WhatsApp.</div>
+      <div><b>Brilhe</b>Receba e use com alegria.</div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer" id="contato">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div class="brand"><span data-store>Andreia semijoias</span><small>semijoias &amp; essência</small></div>
+      <div><strong>Vamos conversar?</strong><p id="contact">—</p></div>
+      <div><strong>Nos acompanhe</strong><p id="social">—</p></div>
+    </div>
+    <div class="fine">
+      <span>© <span id="year">2026</span> <span data-store>Andreia semijoias</span> · Cada detalhe, uma expressão sua.</span>
+      <span><a href="/afiliado">Área do afiliado</a> · <a href="/admin" rel="nofollow">Acesso da loja</a></span>
+    </div>
+  </div>
+</footer>
+
+<a class="fab" id="fab" href="#" aria-label="Conversar no WhatsApp" target="_blank" rel="noopener noreferrer"></a>
+
+<dialog id="productDialog" aria-labelledby="pdName">
+  <div class="pd">
+    <div class="pd-photo"><img id="pdImg" alt=""></div>
+    <div class="pd-info">
+      <button class="close" type="button" data-close="productDialog" aria-label="Fechar">×</button>
+      <span class="eyebrow">Seleção especial</span>
+      <h2 id="pdName"></h2>
+      <p class="price" id="pdPrice"></p>
+      <p>Gostou? Fale com a gente pelo WhatsApp para confirmar disponibilidade, tirar dúvidas e finalizar seu pedido.</p>
+      <div id="pdBuy"></div>
+    </div>
+  </div>
+</dialog>
+
+<script src="/js/common.js"></script>
+<script src="/js/store.js"></script>
+</body>
+</html>

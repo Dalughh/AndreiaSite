@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>Painel da loja</title>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/site.css">
+<link rel="stylesheet" href="/css/admin.css">
+</head>
+<body class="panel">
+
+<section id="loginView" hidden>
+  <div class="login-box">
+    <span class="eyebrow">Acesso restrito</span>
+    <h1>Bem-vinda de volta</h1>
+    <p class="muted">Entre para cuidar da sua vitrine.</p>
+    <form id="loginForm" novalidate>
+      <label for="username">Usuário</label>
+      <input id="username" name="username" autocomplete="username" required>
+      <label for="password">Senha</label>
+      <input id="password" name="password" type="password" autocomplete="current-password" required>
+      <p class="error" id="loginError" role="alert"></p>
+      <button class="btn block" type="submit">Entrar no painel</button>
+    </form>
+    <p class="help back-link"><a href="/">← Voltar para a loja</a></p>
+  </div>
+</section>
+
+<div id="appView" hidden>
+  <header class="panel-top"><div class="wrap in">
+    <a class="brand" href="/admin"><span id="topName">Minha loja</span><small>painel de gestão</small></a>
+    <div class="panel-actions">
+      <a class="btn outline small" href="/" target="_blank" rel="noopener">Ver loja ↗</a>
+      <button id="logout" class="btn outline small" type="button">Sair</button>
+    </div>
+  </div></header>
+
+  <main class="wrap">
+    <div class="tabs" role="tablist" aria-label="Seções do painel">
+      <button class="tab" role="tab" id="tab-overview" aria-controls="pane-overview" aria-selected="true" data-tab="overview">Resumo</button>
+      <button class="tab" role="tab" id="tab-orders" aria-controls="pane-orders" aria-selected="false" data-tab="orders">Vendas</button>
+      <button class="tab" role="tab" id="tab-products" aria-controls="pane-products" aria-selected="false" data-tab="products">Joias <span class="pill" id="pillProducts">0</span></button>
+      <button class="tab" role="tab" id="tab-affiliates" aria-controls="pane-affiliates" aria-selected="false" data-tab="affiliates">Afiliados <span class="pill" id="pillAff">0</span></button>
+      <button class="tab" role="tab" id="tab-settings" aria-controls="pane-settings" aria-selected="false" data-tab="settings">Configurações</button>
+    </div>
+
+    <section class="pane" id="pane-overview" role="tabpanel" aria-labelledby="tab-overview">
+      <div class="cards">
+        <div class="stat"><span>Vendas pagas</span><strong id="stPaidCount">0</strong></div>
+        <div class="stat"><span>Faturamento</span><strong id="stRevenue">R$ 0,00</strong></div>
+        <div class="stat"><span>Comissões a pagar</span><strong id="stCommDue">R$ 0,00</strong></div>
+        <div class="stat"><span>Comissões pagas</span><strong id="stCommPaid">R$ 0,00</strong></div>
+      </div>
+      <div class="box">
+        <div class="box-head"><div><h3>Interessados via afiliados</h3><p class="help">Cada clique em “Comprar pelo WhatsApp” de um visitante indicado aparece aqui. Quando fechar a venda, use “Registrar venda”.</p></div></div>
+        <div id="leadList"></div>
+      </div>
+    </section>
+
+    <section class="pane" id="pane-orders" role="tabpanel" aria-labelledby="tab-orders" hidden>
+      <div class="box">
+        <div class="box-head">
+          <div><h3>Vendas e comissões</h3><p class="help">A comissão é aprovada quando a venda é marcada como paga e é revertida em cancelamentos ou reembolsos.</p></div>
+          <div class="toolbar">
+            <label class="sr-only" for="orderFilter">Filtrar</label>
+            <select id="orderFilter"><option value="all">Todas</option><option value="pending">Pendentes</option><option value="paid">Pagas</option><option value="cancelled">Canceladas</option><option value="refunded">Reembolsadas</option></select>
+            <button class="btn small" id="newOrder" type="button">+ Registrar venda</button>
+          </div>
+        </div>
+        <div id="orderList"></div>
+      </div>
+    </section>
+
+    <section class="pane" id="pane-products" role="tabpanel" aria-labelledby="tab-products" hidden>
+      <div class="box">
+        <div class="box-head"><div><h3>Joias da vitrine</h3><p class="help">O que você salvar aqui aparece na loja imediatamente.</p></div><button class="btn small" id="newProduct" type="button">+ Adicionar joia</button></div>
+        <div id="productList"></div>
+      </div>
+    </section>
+
+    <section class="pane" id="pane-affiliates" role="tabpanel" aria-labelledby="tab-affiliates" hidden>
+      <div class="box">
+        <div class="box-head"><div><h3>Afiliados</h3><p class="help">Cada afiliado recebe um link de divulgação e um acesso próprio para acompanhar suas vendas.</p></div><button class="btn small" id="newAffiliate" type="button">+ Novo afiliado</button></div>
+        <div class="table-wrap" id="affiliateList"></div>
+      </div>
+    </section>
+
+    <section class="pane" id="pane-settings" role="tabpanel" aria-labelledby="tab-settings" hidden>
+      <div class="box">
+        <h3>Dados da loja</h3>
+        <form id="settingsForm" novalidate>
+          <div class="form-grid">
+            <div class="full"><label for="storeName">Nome da loja</label><input id="storeName" required maxlength="55"></div>
+            <div><label for="whatsapp">WhatsApp (DDI + DDD + número)</label><input id="whatsapp" type="tel" inputmode="tel" placeholder="+55 (34) 99999-9999" required maxlength="24"><p class="help">Os pedidos chegam neste número.</p></div>
+            <div><label for="instagram">Instagram (usuário)</label><input id="instagram" placeholder="sualoja" maxlength="31"></div>
+          </div>
+          <button class="btn" type="submit">Salvar dados da loja</button>
+        </form>
+      </div>
+      <div class="box">
+        <h3>Programa de afiliados</h3>
+        <div class="note">A comissão é calculada sobre o valor da venda no momento em que ela é registrada. Mudar o percentual depois não altera vendas antigas.</div>
+        <form id="affSettingsForm" novalidate>
+          <div class="form-grid">
+            <div><label for="defaultCommission">Comissão padrão (%)</label><input id="defaultCommission" type="number" min="0" max="100" step="0.01" required></div>
+            <div><label for="attributionDays">Validade da indicação (dias)</label><input id="attributionDays" type="number" min="1" max="365" step="1" required></div>
+            <div><label for="minPayout">Mínimo para pagamento (R$)</label><input id="minPayout" type="number" min="0" max="999999" step="0.01" required></div>
+            <div><label for="programStatus">Programa</label><select id="programStatus"><option value="active">Ativo</option><option value="paused">Pausado</option></select></div>
+          </div>
+          <button class="btn" type="submit">Salvar regras</button>
+        </form>
+      </div>
+    </section>
+  </main>
+</div>
+
+<!-- Joia -->
+<dialog id="productDialog" aria-labelledby="productDialogTitle" class="wide">
+  <div class="dialog-head"><h2 id="productDialogTitle">Adicionar joia</h2><button class="close" type="button" data-close="productDialog" aria-label="Fechar">×</button></div>
+  <form id="productForm" novalidate>
+    <label for="productName">Nome da joia</label><input id="productName" required maxlength="85">
+    <label for="productPrice">Preço (R$)</label><input id="productPrice" inputmode="decimal" placeholder="129,90" required>
+    <label for="productPhoto">Foto da joia</label><input id="productPhoto" type="file" accept="image/jpeg,image/png,image/webp">
+    <p class="help" id="photoHelp">JPG, PNG ou WebP, até 10 MB. A imagem é otimizada automaticamente.</p>
+    <img id="preview" class="preview" alt="Pré-visualização da joia" hidden>
+    <p class="error" id="productError" role="alert"></p>
+    <button class="btn block" id="saveProduct" type="submit">Salvar joia</button>
+  </form>
+</dialog>
+
+<!-- Afiliado -->
+<dialog id="affiliateDialog" aria-labelledby="affDialogTitle" class="wide">
+  <div class="dialog-head"><h2 id="affDialogTitle">Novo afiliado</h2><button class="close" type="button" data-close="affiliateDialog" aria-label="Fechar">×</button></div>
+  <form id="affiliateForm" novalidate>
+    <div class="form-grid">
+      <div class="full"><label for="affName">Nome</label><input id="affName" required maxlength="80"></div>
+      <div><label for="affEmail">E-mail</label><input id="affEmail" type="email" maxlength="120"></div>
+      <div><label for="affPhone">WhatsApp</label><input id="affPhone" type="tel" maxlength="24"></div>
+      <div><label for="affCommission">Comissão individual (%)</label><input id="affCommission" type="number" min="0" max="100" step="0.01" placeholder="Usar a padrão"></div>
+      <div><label for="affPix">Chave PIX</label><input id="affPix" maxlength="160"></div>
+    </div>
+    <p class="error" id="affError" role="alert"></p>
+    <button class="btn block" type="submit">Criar afiliado</button>
+  </form>
+</dialog>
+
+<!-- Credenciais do afiliado (mostradas uma vez) -->
+<dialog id="secretDialog" aria-labelledby="secretTitle" class="wide" data-light="no">
+  <div class="dialog-head"><h2 id="secretTitle">Acesso do afiliado</h2><button class="close" type="button" data-close="secretDialog" aria-label="Fechar">×</button></div>
+  <p class="note">Guarde estes dados agora: o token <strong>não poderá ser visto de novo</strong>. Se perder, gere um novo na lista de afiliados.</p>
+  <label>Link de divulgação</label><div class="secret" id="secretPublic"></div>
+  <button class="mini" type="button" id="copyPublic">Copiar link de divulgação</button>
+  <label>Link do painel do afiliado (privado)</label><div class="secret" id="secretPanel"></div>
+  <button class="mini" type="button" id="copyPanel">Copiar link do painel</button>
+  <p class="help">Envie o link do painel somente ao afiliado. Código: <strong id="secretCode"></strong></p>
+</dialog>
+
+<!-- Venda -->
+<dialog id="orderDialog" aria-labelledby="orderDialogTitle" class="wide">
+  <div class="dialog-head"><h2 id="orderDialogTitle">Registrar venda</h2><button class="close" type="button" data-close="orderDialog" aria-label="Fechar">×</button></div>
+  <p class="help">Use quando o cliente fechar a compra pelo WhatsApp. O código do afiliado é opcional.</p>
+  <form id="orderForm" novalidate>
+    <div class="form-grid">
+      <div><label for="orderCustomer">Cliente</label><input id="orderCustomer" required maxlength="100"></div>
+      <div><label for="orderValue">Valor da venda (R$)</label><input id="orderValue" inputmode="decimal" placeholder="129,90" required></div>
+      <div><label for="orderAffiliate">Código do afiliado</label><select id="orderAffiliate"><option value="">Sem afiliado</option></select></div>
+      <div><label for="orderStatus">Situação</label><select id="orderStatus"><option value="pending">Pendente</option><option value="paid">Paga</option></select></div>
+      <div class="full"><label for="orderReference">Observação</label><input id="orderReference" maxlength="120" placeholder="Ex.: Colar Essência, pago via PIX"></div>
+    </div>
+    <p class="error" id="orderError" role="alert"></p>
+    <button class="btn block" type="submit">Registrar venda</button>
+  </form>
+</dialog>
+
+<script src="/js/common.js"></script>
+<script src="/js/admin.js"></script>
+</body>
+</html>

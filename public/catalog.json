@@ -1,0 +1,43 @@
+{
+ "name": "Andreia semijoias",
+ "whatsapp": "5534998005534",
+ "instagram": "andreiaqueirozjoias",
+ "products": [
+  {
+   "id": "1",
+   "name": "Colar Essência",
+   "price": 129.9,
+   "photo": "/img/p1.jpg"
+  },
+  {
+   "id": "2",
+   "name": "Brincos Aurora",
+   "price": 89.9,
+   "photo": "/img/p2.jpg"
+  },
+  {
+   "id": "3",
+   "name": "Brincos Lumière",
+   "price": 119.9,
+   "photo": "/img/p3.jpg"
+  },
+  {
+   "id": "4",
+   "name": "Anel Infinito",
+   "price": 99.9,
+   "photo": "/img/p4.jpg"
+  },
+  {
+   "id": "5",
+   "name": "Pulseira Elo",
+   "price": 149.9,
+   "photo": "/img/p5.jpg"
+  },
+  {
+   "id": "6",
+   "name": "Colar Harmonia",
+   "price": 159.9,
+   "photo": "/img/p6.jpg"
+  }
+ ]
+}
