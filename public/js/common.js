@@ -70,9 +70,14 @@
         headers: { 'Content-Type': 'application/json', 'X-Requested-With': 'aurea' },
         body: body === undefined ? undefined : JSON.stringify(body)
       });
+      const raw = await res.text();
       let data = null;
-      try { data = await res.json(); } catch (_) { /* resposta sem JSON */ }
-      if (!res.ok) throw new ApiError((data && data.error) || 'Não foi possível concluir. Tente novamente.', res.status);
+      try { data = JSON.parse(raw); } catch (_) { /* resposta sem JSON */ }
+      if (!res.ok) {
+        const detail = data && data.error ? data.error : 'Não foi possível concluir. Tente novamente. [HTTP ' + res.status + ': ' + raw.replace(/\s+/g, ' ').slice(0, 90) + ']';
+        throw new ApiError(detail, res.status);
+      }
+      if (data === null) throw new ApiError('Resposta inesperada do servidor. [HTTP ' + res.status + ': ' + raw.replace(/\s+/g, ' ').slice(0, 90) + ']', res.status);
       return data;
     } catch (e) {
       if (e instanceof ApiError) throw e;

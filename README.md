@@ -42,7 +42,7 @@ node tests/dev-server.js                   # visualizar em http://localhost:3111
 ## Estrutura
 
 ```
-api/[...path].js   API única (rotas públicas, admin e afiliado)
+api/index.js        API única (rotas públicas, admin e afiliado)
 lib/               banco, autenticação, regras de negócio
 public/            site (index, admin, afiliado, css, js, img, catalog.json)
 tests/             testes automáticos e teste de fumaça
